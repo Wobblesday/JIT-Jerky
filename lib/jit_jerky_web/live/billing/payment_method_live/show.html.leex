@@ -1,0 +1,37 @@
+<h1>Show Payment method</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, JITJerkyWeb.Billing.PaymentMethodLive.FormComponent,
+    id: @payment_method.id,
+    title: @page_title,
+    action: @live_action,
+    payment_method: @payment_method,
+    return_to: Routes.billing_payment_method_show_path(@socket, :show, @payment_method) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Card number:</strong>
+    <%= @payment_method.card_number %>
+  </li>
+
+  <li>
+    <strong>Name on card:</strong>
+    <%= @payment_method.name_on_card %>
+  </li>
+
+  <li>
+    <strong>Expiration month:</strong>
+    <%= @payment_method.expiration_month %>
+  </li>
+
+  <li>
+    <strong>Expiration year:</strong>
+    <%= @payment_method.expiration_year %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.billing_payment_method_show_path(@socket, :edit, @payment_method), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.billing_payment_method_index_path(@socket, :index) %></span>
