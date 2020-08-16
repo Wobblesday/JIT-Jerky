@@ -34,6 +34,17 @@ defmodule JITJerkyWeb.Router do
     live "/products/:id/show/edit", ProductLive.Show, :edit
   end
 
+  scope "/billing", JITJerkyWeb.Billing, as: :billing do
+    pipe_through :browser
+
+    live "/addresses", AddressLive.Index, :index
+    live "/addresses/new", AddressLive.Index, :new
+    live "/addresses/:id/edit", AddressLive.Index, :edit
+
+    live "/addresses/:id", AddressLive.Show, :show
+    live "/addresses/:id/show/edit", AddressLive.Show, :edit
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", JITJerkyWeb do
   #   pipe_through :api

@@ -1,0 +1,57 @@
+<h1>Show Address</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, JITJerkyWeb.Billing.AddressLive.FormComponent,
+    id: @address.id,
+    title: @page_title,
+    action: @live_action,
+    address: @address,
+    return_to: Routes.billing_address_show_path(@socket, :show, @address) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Country:</strong>
+    <%= @address.country %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @address.name %>
+  </li>
+
+  <li>
+    <strong>Address line1:</strong>
+    <%= @address.address_line1 %>
+  </li>
+
+  <li>
+    <strong>Address line2:</strong>
+    <%= @address.address_line2 %>
+  </li>
+
+  <li>
+    <strong>City:</strong>
+    <%= @address.city %>
+  </li>
+
+  <li>
+    <strong>Province:</strong>
+    <%= @address.province %>
+  </li>
+
+  <li>
+    <strong>Postal code:</strong>
+    <%= @address.postal_code %>
+  </li>
+
+  <li>
+    <strong>Telephone:</strong>
+    <%= @address.telephone %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.billing_address_show_path(@socket, :edit, @address), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.billing_address_index_path(@socket, :index) %></span>

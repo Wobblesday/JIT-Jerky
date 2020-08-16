@@ -1,0 +1,55 @@
+defmodule JITJerkyWeb.Billing.AddressLive.FormComponent do
+  use JITJerkyWeb, :live_component
+
+  alias JITJerky.Billing
+
+  @impl true
+  def update(%{address: address} = assigns, socket) do
+    changeset = Billing.change_address(address)
+
+    {:ok,
+     socket
+     |> assign(assigns)
+     |> assign(:changeset, changeset)}
+  end
+
+  @impl true
+  def handle_event("validate", %{"address" => address_params}, socket) do
+    changeset =
+      socket.assigns.address
+      |> Billing.change_address(address_params)
+      |> Map.put(:action, :validate)
+
+    {:noreply, assign(socket, :changeset, changeset)}
+  end
+
+  def handle_event("save", %{"address" => address_params}, socket) do
+    save_address(socket, socket.assigns.action, address_params)
+  end
+
+  defp save_address(socket, :edit, address_params) do
+    case Billing.update_address(socket.assigns.address, address_params) do
+      {:ok, _address} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Address updated successfully")
+         |> push_redirect(to: socket.assigns.return_to)}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, :changeset, changeset)}
+    end
+  end
+
+  defp save_address(socket, :new, address_params) do
+    case Billing.create_address(address_params) do
+      {:ok, _address} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Address created successfully")
+         |> push_redirect(to: socket.assigns.return_to)}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+end
