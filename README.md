@@ -1,4 +1,4 @@
-# JITJerky
+# JIT Jerky
 
 To start your Phoenix server:
 
