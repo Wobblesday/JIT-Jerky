@@ -15,7 +15,8 @@ defmodule JITJerky.Sales.Product do
   def changeset(product, attrs) do
     product
     |> cast(attrs, [:name, :price, :sku, :opaque_id])
-    |> validate_required([:name, :price, :sku, :opaque_id])
+    |> validate_required([:name, :price])
+    |> validate_length(:sku, is: 13)
     |> unique_constraint(:sku)
     |> unique_constraint(:opaque_id)
   end
