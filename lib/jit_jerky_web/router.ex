@@ -43,6 +43,13 @@ defmodule JITJerkyWeb.Router do
 
     live "/addresses/:id", AddressLive.Show, :show
     live "/addresses/:id/show/edit", AddressLive.Show, :edit
+
+    live "/payment_methods", PaymentMethodLive.Index, :index
+    live "/payment_methods/new", PaymentMethodLive.Index, :new
+    live "/payment_methods/:id/edit", PaymentMethodLive.Index, :edit
+
+    live "/payment_methods/:id", PaymentMethodLive.Show, :show
+    live "/payment_methods/:id/show/edit", PaymentMethodLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
